@@ -2,13 +2,7 @@
 
 import { useState } from "react";
 import MovieCard from "./MovieCard";
-
-interface MovieInfo {
-  title: string;
-  releaseDate: string;
-  rating: number;
-  posterUrl: string;
-}
+import MovieInfo from "../types/MovieInfo";
 
 interface MovieListProps {
   movies: MovieInfo[];
@@ -16,7 +10,7 @@ interface MovieListProps {
 
 const MovieList: React.FC<MovieListProps> = ({ movies }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 3;
 
   const totalPages = Math.ceil(movies.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -27,11 +21,19 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {currentMovies.map((movie, index) => (
-          <MovieCard key={index} movie={movie} />
-        ))}
+    <div className="flex flex-col items-center gap-2 bg-gray-100 p-4 rounded w-full h-[40rem]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+        {currentMovies.length > 0 ? (
+          currentMovies.map((movie, index) => (
+            <MovieCard key={index} movie={movie} />
+          ))
+        ) : (
+          <div className="w-full flex item-center justify-items-center">
+            <h2 className="w-full  flex item-center justify-items-center text-black ">
+              There is no spoon
+            </h2>
+          </div>
+        )}
       </div>
       <div className="flex gap-4 mt-8">
         {Array.from({ length: totalPages }, (_, index) => (
