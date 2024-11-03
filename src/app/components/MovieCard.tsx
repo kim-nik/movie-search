@@ -1,5 +1,6 @@
 "use client";
 
+import { useAddToFavorites } from "../services/favoriteMoviesQuery";
 import MovieInfo from "../types/MovieInfo";
 
 interface MovieCardProps {
@@ -9,9 +10,11 @@ interface MovieCardProps {
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   // сюда или выше?
 
-  function addToFavoritesHandler(): void {
-    console.log(`${movie.title} added to favorites`);
-  }
+  const addToFavoritesMutation = useAddToFavorites();
+
+  const addToFavoritesHandler = () => {
+    addToFavoritesMutation.mutate(movie);
+  };
 
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden ">
