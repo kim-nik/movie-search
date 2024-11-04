@@ -12,31 +12,27 @@ export const fetchFavoriteMovies = async (): Promise<MovieInfo[]> => {
 };
 
 export const useFavoriteMovies = () => {
-  return useQuery(["favoriteMovies"], fetchFavoriteMovies);
+  return useQuery({
+    initialData: [],
+    queryFn: fetchFavoriteMovies,
+    queryKey: ["favoriteMovies"],
+  });
 };
 
 export const useRemoveFromFavorites = () => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (movie: MovieInfo) => {
-      return new Promise<void>((resolve) => {
-        const favoriteMovies = JSON.parse(
-          localStorage.getItem("favoriteMovies") || "[]"
-        );
-        const updatedFavorites = favoriteMovies.filter(
-          (favMovie: MovieInfo) => favMovie.title !== movie.title
-        );
-        localStorage.setItem(
-          "favoriteMovies",
-          JSON.stringify(updatedFavorites)
-        );
-        resolve();
-      });
+  return useMutation<void, Error, MovieInfo>({
+    mutationFn: async (movie: MovieInfo) => {
+      const favoriteMovies = JSON.parse(
+        localStorage.getItem("favoriteMovies") || "[]"
+      );
+      const updatedFavorites = favoriteMovies.filter(
+        (favMovie: MovieInfo) => favMovie.title !== movie.title
+      );
+      localStorage.setItem("favoriteMovies", JSON.stringify(updatedFavorites));
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["favoriteMovies"]);
-      },
-    }
-  );
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["favoriteMovies"] });
+    },
+  });
 };
