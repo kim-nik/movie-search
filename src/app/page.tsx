@@ -4,7 +4,7 @@ import { useState } from "react";
 import { mockMovies } from "./api/mockMovies";
 import MovieList from "./components/MovieList";
 import SearchBar from "./components/SearchBar";
-import FavoritesMovieList from "./components/FavoritesMovieList";
+import FavoritesMovieList from "./components/Favorites/FavoritesMovieList";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
