@@ -19,7 +19,7 @@ const FavoritesMovieList: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center gap-2 bg-gray-100 p-4 rounded max-w-screen-lg w-1/4">
+    <div className="flex flex-col items-center gap-2 bg-gray-100 p-4 rounded max-w-screen-lg w-1/4 min-w-60">
       {favoriteMovies.length > 0 ? (
         <div className="flex flex-col gap-4 w-full">
           {favoriteMovies.map((movie, index) => (

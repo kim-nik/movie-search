@@ -38,7 +38,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-2 bg-gray-100 p-4 rounded w-3/4 ">
+    <div className="flex flex-col items-center gap-2 bg-gray-100 p-4 rounded w-3/4 min-w-72 ">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
         {currentMovies.length > 0 ? (
           currentMovies.map((movie, index) => (

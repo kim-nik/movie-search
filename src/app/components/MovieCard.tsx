@@ -17,7 +17,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg overflow-hidden ">
+    <div className="bg-white shadow-md rounded-lg overflow-hidden min-w-60">
       {/* Пока не смотрел как более стильно обращаться с картинками */}
       <img
         src={movie.posterUrl}
