@@ -1,6 +1,7 @@
 export default interface MovieInfo {
-  title: string;
-  releaseDate: string;
-  rating: number;
-  posterUrl: string;
+  Title: string;
+  Year: string;
+  rating?: number;
+  Poster: string;
+  Type: "movie" | "series";
 }
