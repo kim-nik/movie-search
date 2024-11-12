@@ -2,7 +2,7 @@ import MovieInfo from "../types/MovieInfo";
 
 const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
-const API_URL = `http://www.omdbapi.com/?apikey=${apiKey}&`;
+const API_URL = `https://www.omdbapi.com/?apikey=${apiKey}&`;
 
 export const fetchMovies = async (): Promise<MovieInfo[]> => {
   const response = await fetch(`${API_URL}s=pulp`); // TODO тестовое решение
