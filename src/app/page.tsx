@@ -1,21 +1,34 @@
-"use client"; //есть маааленькое подозрение что не стоит делать главную страницу клиентской, но пока у нас есть только она, оставим всё так
+"use client"; // FIXME есть маааленькое подозрение что не стоит делать главную страницу клиентской,
+// но пока у нас есть только она, оставим всё так
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import MovieList from "./components/MovieList";
 import SearchBar from "./components/SearchBar";
 import FavoritesMovieList from "./components/Favorites/FavoritesMovieList";
 import MovieInfo from "./types/MovieInfo";
 import { useFetchMovies } from "./services/movieQueries";
+import { debounce } from "lodash";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const { data: movies = [], isLoading, isError } = useFetchMovies();
 
-  const filteredMovies = useMemo(() => {
-    return movies.filter((movie: MovieInfo) =>
-      movie.Title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [movies, searchTerm]);
+  const [filteredMovies, setFilteredMovies] = useState<MovieInfo[]>(movies);
+
+  const debouncedFilterMovies = useMemo(
+    () =>
+      debounce((term: string, movies: MovieInfo[]) => {
+        const filtered = movies.filter((movie: MovieInfo) =>
+          movie.Title.toLowerCase().includes(term.toLowerCase())
+        );
+        setFilteredMovies(filtered);
+      }, 300),
+    []
+  );
+
+  useEffect(() => {
+    debouncedFilterMovies(searchTerm, movies);
+  }, [searchTerm, movies, debouncedFilterMovies]);
 
   if (isLoading) {
     return <p>Loading...</p>;
