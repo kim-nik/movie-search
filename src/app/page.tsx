@@ -1,34 +1,34 @@
 "use client"; // FIXME есть маааленькое подозрение что не стоит делать главную страницу клиентской,
 // но пока у нас есть только она, оставим всё так
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import MovieList from "./components/MovieList";
 import SearchBar from "./components/SearchBar";
 import FavoritesMovieList from "./components/Favorites/FavoritesMovieList";
-import MovieInfo from "./types/MovieInfo";
-import { useFetchMovies } from "./services/movieQueries";
+import { useSearchMovies } from "./services/movieQueries";
 import { debounce } from "lodash";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data: movies = [], isLoading, isError } = useFetchMovies();
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
-  const [filteredMovies, setFilteredMovies] = useState<MovieInfo[]>(movies);
-
-  const debouncedFilterMovies = useMemo(
-    () =>
-      debounce((term: string, movies: MovieInfo[]) => {
-        const filtered = movies.filter((movie: MovieInfo) =>
-          movie.Title.toLowerCase().includes(term.toLowerCase())
-        );
-        setFilteredMovies(filtered);
-      }, 300),
-    []
-  );
-
+  // Debounce the search term to avoid spamming requests
   useEffect(() => {
-    debouncedFilterMovies(searchTerm, movies);
-  }, [searchTerm, movies, debouncedFilterMovies]);
+    const handler = debounce(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 300);
+
+    handler();
+    return () => {
+      handler.cancel();
+    };
+  }, [searchTerm]);
+
+  const {
+    data: movies = [],
+    isLoading,
+    isError,
+  } = useSearchMovies(debouncedSearchTerm);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -43,7 +43,7 @@ export default function Home() {
       <main className="flex flex-col gap-8 items-center sm:items-start w-3/4 ">
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <div className="flex gap-4 w-full">
-          <MovieList movies={filteredMovies} />
+          <MovieList movies={movies} />
           <FavoritesMovieList></FavoritesMovieList>
         </div>
       </main>
