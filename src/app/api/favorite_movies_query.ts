@@ -27,7 +27,7 @@ export const useRemoveFromFavorites = () => {
         localStorage.getItem("favoriteMovies") || "[]"
       );
       const updatedFavorites = favoriteMovies.filter(
-        (favMovie: MovieInfo) => favMovie.title !== movie.title
+        (favMovie: MovieInfo) => favMovie.Title !== movie.Title
       );
       localStorage.setItem("favoriteMovies", JSON.stringify(updatedFavorites));
     },

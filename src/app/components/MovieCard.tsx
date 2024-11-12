@@ -9,26 +9,26 @@ interface MovieCardProps {
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   // сюда или выше?
-
   const addToFavoritesMutation = useAddToFavorites();
-
   const addToFavoritesHandler = () => {
     addToFavoritesMutation.mutate(movie);
   };
+
+  const defaultPoster = "/404.jpeg";
 
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden min-w-60">
       {/* Пока не смотрел как более стильно обращаться с картинками */}
       <img
-        src={movie.posterUrl}
-        alt={`${movie.title} poster`}
+        src={movie.Poster != "N/A" ? movie.Poster : defaultPoster}
+        alt={`${movie.Title} poster`}
         className="w-full object-cover h-80  p-4"
       />
       <div className="p-4">
         <h2 className="text-xl font-bold mb-2 text-black h-[3.5rem] line-clamp-2 ">
-          {movie.title}
+          {movie.Title}
         </h2>
-        <p className="text-gray-600">Release Date: {movie.releaseDate}</p>
+        <p className="text-gray-600">Release Date: {movie.Year}</p>
         <p className="text-gray-600 mb-4">Rating: {movie.rating} / 10</p>
         <button
           onClick={addToFavoritesHandler}

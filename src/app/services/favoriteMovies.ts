@@ -13,7 +13,7 @@ export const addMovieToFavorites = async (movie: MovieInfo): Promise<void> => {
 
     // Проверяем, если фильм уже есть в избранном
     const isAlreadyFavorite = favoriteMovies.some(
-      (favMovie: MovieInfo) => favMovie.title === movie.title
+      (favMovie: MovieInfo) => favMovie.Title === movie.Title
     );
 
     if (!isAlreadyFavorite) {
@@ -30,7 +30,7 @@ export const removeMovieFromFavorites = (movie: MovieInfo): void => {
     localStorage.getItem("favoriteMovies") || "[]"
   );
   const updatedFavorites = favoriteMovies.filter(
-    (favMovie: MovieInfo) => favMovie.title !== movie.title
+    (favMovie: MovieInfo) => favMovie.Title !== movie.Title
   );
   localStorage.setItem("favoriteMovies", JSON.stringify(updatedFavorites));
 };

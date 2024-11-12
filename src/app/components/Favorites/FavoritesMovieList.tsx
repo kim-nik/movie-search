@@ -27,7 +27,7 @@ const FavoritesMovieList: React.FC = () => {
               key={index}
               className="text-black relative flex items-center w-full bg-white shadow-md rounded-lg overflow-hidden p-2"
             >
-              <p className="w-full">{movie.title}</p>
+              <p className="w-full">{movie.Title}</p>
               <button
                 onClick={() => handleRemoveFromFavorites(movie)}
                 className=" w-1/4 bg-red-500 text-white rounded-full p-2"
