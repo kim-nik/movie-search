@@ -41,8 +41,8 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
     <div className="flex flex-col items-center gap-4 bg-gray-100 p-4 rounded w-full sm:w-3/4 ">
       <div className="grid gap-4 w-full sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
         {currentMovies.length > 0 ? (
-          currentMovies.map((movie, index) => (
-            <MovieCard key={index} movie={movie} />
+          currentMovies.map((movie) => (
+            <MovieCard key={movie.imdbID} movie={movie} />
           ))
         ) : (
           <div className="w-full flex items-center justify-center">
