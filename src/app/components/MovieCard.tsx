@@ -7,7 +7,6 @@ import { useRef } from "react";
 
 interface MovieCardProps {
   movie: MovieInfo;
-  key: string | number; // FIXME вспомнить как правильно использовать ключи, доставать ли ключ из movie или передавать из листа
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
@@ -23,7 +22,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const hoverable = useHover((hovered) => (
     <div
-      key={movie.imdbID}
       ref={cardRef}
       className={`bg-white shadow-md rounded-lg overflow-hidden w-full transform transition-transform duration-300 ${
         hovered ? "scale-105 shadow-lg" : ""

@@ -2,12 +2,12 @@
 // но пока у нас есть только она, оставим всё так
 
 import React, { useEffect, useState } from "react";
-import MovieList from "./components/MovieList";
-import SearchBar from "./components/SearchBar";
-import FavoritesMovieList from "./components/Favorites/FavoritesMovieList";
+import SearchBar from "./components/ui/SearchBar";
+import FavoritesMovieList from "./components/favorites/FavoritesMovieList";
 import { useSearchMovies } from "./services/movieQueries";
 import { debounce } from "lodash";
 import { useRouter, useSearchParams } from "next/navigation";
+import Movies from "./components/Movies";
 
 export default function Home() {
   const router = useRouter();
@@ -43,18 +43,7 @@ export default function Home() {
       <main className="flex flex-col gap-4 sm:gap-8 items-center sm:items-start w-full xl:w-3/4">
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <div className="flex flex-col sm:flex-row gap-4 w-full">
-          {/* FIXME Как бы этот блок с выводом состояния загрузки улучшить, разнести по элементам */}
-          {isLoading ? (
-            <p className="flex flex-col items-center gap-2 bg-gray-100 p-4 rounded w-full sm:w-3/4 h-full text-black">
-              Loading...
-            </p>
-          ) : isError ? (
-            <p className="flex flex-col items-center gap-2 bg-gray-100 p-4 rounded w-full sm:w-3/4 h-full text-black">
-              Failed to load movies. Please try again later.
-            </p>
-          ) : (
-            <MovieList movies={movies} />
-          )}
+          <Movies movies={movies} isLoading={isLoading} isError={isError} />
           <FavoritesMovieList />
         </div>
       </main>

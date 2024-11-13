@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
 import MovieInfo from "../types/MovieInfo";
+import MoviesContainer from "./MoviesContainer";
 
 interface MovieListProps {
   movies: MovieInfo[];
@@ -38,7 +39,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 bg-gray-100 p-4 rounded w-full sm:w-3/4 ">
+    <MoviesContainer>
       <div className="grid gap-4 w-full sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
         {currentMovies.length > 0 ? (
           currentMovies.map((movie) => (
@@ -61,7 +62,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
         </button>
         {Array.from({ length: totalPages }, (_, index) => (
           <button
-            key={index}
+            key={`${totalPages}_${index}`}
             onClick={() => handlePageChange(index + 1)}
             className={`px-3 py-1 rounded ${
               currentPage === index + 1
@@ -80,7 +81,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
           Next
         </button>
       </div>
-    </div>
+    </MoviesContainer>
   );
 };
 
