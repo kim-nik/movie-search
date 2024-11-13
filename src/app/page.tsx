@@ -1,7 +1,7 @@
 "use client"; // FIXME есть маааленькое подозрение что не стоит делать главную страницу клиентской,
 // но пока у нас есть только она, оставим всё так
 
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import MovieList from "./components/MovieList";
 import SearchBar from "./components/SearchBar";
 import FavoritesMovieList from "./components/Favorites/FavoritesMovieList";
