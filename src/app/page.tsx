@@ -21,7 +21,7 @@ export default function Home() {
   useEffect(() => {
     const handler = debounce(() => {
       setDebouncedSearchTerm(searchTerm);
-      router.push(`/?query=${encodeURIComponent(searchTerm)}`, {
+      router.replace(`/?query=${encodeURIComponent(searchTerm)}`, {
         scroll: false,
       });
     }, 300);
@@ -39,27 +39,25 @@ export default function Home() {
   } = useSearchMovies(debouncedSearchTerm);
 
   return (
-    <Suspense fallback={<p>Loading search parameters...</p>}>
-      <div className="grid justify-items-center min-h-screen p-4 sm:p-8 pb-20 font-[family-name:var(--font-geist-sans)] h-130">
-        <main className="flex flex-col gap-4 sm:gap-8 items-center sm:items-start w-full xl:w-3/4">
-          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-          <div className="flex flex-col sm:flex-row gap-4 w-full">
-            {/* FIXME Как бы этот блок с выводом состояния загрузки улучшить, разнести по элементам */}
-            {isLoading ? (
-              <p className="flex flex-col items-center gap-2 bg-gray-100 p-4 rounded w-full sm:w-3/4 h-full text-black">
-                Loading...
-              </p>
-            ) : isError ? (
-              <p className="flex flex-col items-center gap-2 bg-gray-100 p-4 rounded w-full sm:w-3/4 h-full text-black">
-                Failed to load movies. Please try again later.
-              </p>
-            ) : (
-              <MovieList movies={movies} />
-            )}
-            <FavoritesMovieList />
-          </div>
-        </main>
-      </div>
-    </Suspense>
+    <div className="grid justify-items-center min-h-screen p-4 sm:p-8 pb-20 font-[family-name:var(--font-geist-sans)] h-130">
+      <main className="flex flex-col gap-4 sm:gap-8 items-center sm:items-start w-full xl:w-3/4">
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <div className="flex flex-col sm:flex-row gap-4 w-full">
+          {/* FIXME Как бы этот блок с выводом состояния загрузки улучшить, разнести по элементам */}
+          {isLoading ? (
+            <p className="flex flex-col items-center gap-2 bg-gray-100 p-4 rounded w-full sm:w-3/4 h-full text-black">
+              Loading...
+            </p>
+          ) : isError ? (
+            <p className="flex flex-col items-center gap-2 bg-gray-100 p-4 rounded w-full sm:w-3/4 h-full text-black">
+              Failed to load movies. Please try again later.
+            </p>
+          ) : (
+            <MovieList movies={movies} />
+          )}
+          <FavoritesMovieList />
+        </div>
+      </main>
+    </div>
   );
 }
