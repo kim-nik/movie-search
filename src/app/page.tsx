@@ -21,7 +21,7 @@ export default function Home() {
   useEffect(() => {
     const handler = debounce(() => {
       setDebouncedSearchTerm(searchTerm);
-      router.replace(`/?query=${encodeURIComponent(searchTerm)}`, {
+      router.push(`/?query=${encodeURIComponent(searchTerm)}`, {
         scroll: false,
       });
     }, 300);
