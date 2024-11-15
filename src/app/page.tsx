@@ -1,13 +1,13 @@
 "use client"; // FIXME есть маааленькое подозрение что не стоит делать главную страницу клиентской,
 // но пока у нас есть только она, оставим всё так
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SearchBar from "./components/ui/SearchBar";
 import FavoritesMovieList from "./components/favorites/FavoritesMovieList";
 import { useSearchMovies } from "./services/movieQueries";
-import { debounce } from "lodash";
 import { useRouter, useSearchParams } from "next/navigation";
 import Movies from "./components/Movies";
+import { useDebounce } from "react-use";
 
 export default function Home() {
   const router = useRouter();
@@ -17,20 +17,16 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
-  // FIXME я это писал до того, как заглянул в react-use, вероятно стоит заменить?
-  useEffect(() => {
-    const handler = debounce(() => {
+  useDebounce(
+    () => {
       setDebouncedSearchTerm(searchTerm);
       router.push(`/?query=${encodeURIComponent(searchTerm)}`, {
         scroll: false,
       });
-    }, 300);
-
-    handler();
-    return () => {
-      handler.cancel();
-    };
-  }, [searchTerm, router]);
+    },
+    300,
+    [searchTerm, router]
+  );
 
   const {
     data: movies = [],

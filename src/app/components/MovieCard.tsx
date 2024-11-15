@@ -18,10 +18,12 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
 
   const defaultPoster = "/404.jpeg";
 
-  // FIXME у меня большие сомнения в том, что это легальное применение
+  // FIXME у меня большие сомнения в том, что это легальное применение hover
   const cardRef = useRef<HTMLDivElement>(null);
   const hoverable = useHover((hovered) => (
     <div
+      // FIXME без вот этого ключа почему-то появляется ошибка
+      key={movie.imdbID}
       ref={cardRef}
       className={`bg-white shadow-md rounded-lg overflow-hidden w-full transform transition-transform duration-300 ${
         hovered ? "scale-105 shadow-lg" : ""
