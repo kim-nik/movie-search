@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
     const data = await response.json();
     return NextResponse.json(data.Search || []);
   } catch (error) {
-    console.log(error); // FIXME что тут с ошибкой то сделать
+    console.log(error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }

@@ -4,6 +4,7 @@ import { useAddToFavorites } from "../services/favoriteMoviesQuery";
 import MovieInfo from "../types/MovieInfo";
 import { useHover } from "react-use";
 import { useRef } from "react";
+import Image from "next/image";
 
 interface MovieCardProps {
   movie: MovieInfo;
@@ -29,10 +30,12 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
         hovered ? "scale-105 shadow-lg" : ""
       }`}
     >
-      <img
+      <Image
         src={movie.Poster != "N/A" ? movie.Poster : defaultPoster}
         alt={`${movie.Title} poster`}
         className="w-full object-cover h-64 sm:h-80 lg:h-96"
+        width={240}
+        height={500}
       />
       <div className="p-4">
         <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 text-black h-[3.5rem] line-clamp-2">

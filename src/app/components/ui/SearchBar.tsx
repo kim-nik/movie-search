@@ -1,11 +1,25 @@
 "use client";
 
+import { useState } from "react";
+import { useDebounce } from "react-use";
+
 interface SearchBarProps {
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
+  onSearch: (x: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useDebounce(
+    () => {
+      onSearch(searchTerm);
+
+      // router.push(`/?query=${encodeURIComponent(searchTerm)}`);
+    },
+    300,
+    [searchTerm]
+  );
+
   return (
     <input
       type="text"

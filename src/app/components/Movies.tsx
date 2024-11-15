@@ -1,24 +1,26 @@
-import MovieInfo from "../types/MovieInfo";
+"use server";
+
+import { searchMovies } from "../services/movieApi";
 import MovieList from "./MovieList";
-import MoviesContainer from "./MoviesContainer";
+// import MoviesContainer from "./MoviesContainer";
 
 interface MoviesProps {
-  movies: MovieInfo[];
-  isLoading: boolean;
-  isError: boolean;
+  searchTerm: string;
 }
 
-export default function Movies({ movies, isLoading, isError }: MoviesProps) {
-  if (isLoading) {
-    return <MoviesContainer>Loading...</MoviesContainer>;
-  }
+export default async function Movies({ searchTerm }: MoviesProps) {
+  const movies = await searchMovies(searchTerm);
 
-  if (isError) {
-    return (
-      <MoviesContainer>
-        <div> Failed to load movies. Please try again later.</div>
-      </MoviesContainer>
-    );
-  }
+  // if (isLoading) {
+  //   return <MoviesContainer>Loading...</MoviesContainer>;
+  // }
+
+  // if (isError) {
+  //   return (
+  //     <MoviesContainer>
+  //       <div> Failed to load movies. Please try again later.</div>
+  //     </MoviesContainer>
+  //   );
+  // }
   return <MovieList movies={movies} />;
 }
