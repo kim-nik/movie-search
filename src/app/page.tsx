@@ -3,7 +3,7 @@
 
 import React, { useState } from "react";
 import SearchBar from "./components/ui/SearchBar";
-import FavoritesMovieList from "./components/favorites/asdasd";
+import FavoritesMovieList from "./components/favorites/FavoritesMovieList";
 import { useSearchMovies } from "./services/movieQueries";
 import { useRouter, useSearchParams } from "next/navigation";
 import Movies from "./components/Movies";
