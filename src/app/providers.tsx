@@ -10,6 +10,7 @@ interface ProvidersProps {
 const Providers = ({ children }: ProvidersProps) => {
   const [queryClient] = useState(() => new QueryClient());
 
+  // FIXME надо ли оборачивать в саспенс все приложение
   return (
     <Suspense>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
