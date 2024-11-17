@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from "react";
 import MovieList from "./components/MovieList";
 import SearchBar from "./components/SearchBar";
-import FavoritesMovieList from "./components/Favorites/FavoritesMovieList";
+import FavoritesMovieList from "./components/favorites/FavoritesMovieList";
 import { useSearchMovies } from "./services/movieQueries";
 import { debounce } from "lodash";
 
