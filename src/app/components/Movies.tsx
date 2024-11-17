@@ -2,25 +2,17 @@
 
 import { fetchMovies } from "../services/movieApi";
 import MovieInfo from "../types/MovieInfo";
-// import { searchMovies } from "../services/movieApi";
 import MovieList from "./MovieList";
-// import MoviesContainer from "./MoviesContainer";
-
-// export const dynamic = "force-dynamic";
-
-// interface MoviesProps {
-//   searchParams: string;
-// }
 
 const Movies = async () => {
   const query = "inception"; // Значение по умолчанию, можно также использовать другой механизм для получения из параметров
   let initialMovies: MovieInfo[] = [];
   try {
     initialMovies = await fetchMovies(query);
+    console.log(initialMovies);
   } catch (error) {
     console.error("Failed to fetch movies:", error);
   }
-  // const movies = searchMovies(searchParams);
 
   // if (isLoading) {
   //   return <MoviesContainer>Loading...</MoviesContainer>;
