@@ -1,15 +1,26 @@
 "use server";
 
-import { searchMovies } from "../services/movieApi";
+import { fetchMovies } from "../services/movieApi";
+import MovieInfo from "../types/MovieInfo";
+// import { searchMovies } from "../services/movieApi";
 import MovieList from "./MovieList";
 // import MoviesContainer from "./MoviesContainer";
 
-interface MoviesProps {
-  searchTerm: string;
-}
+// export const dynamic = "force-dynamic";
 
-export default async function Movies({ searchTerm }: MoviesProps) {
-  const movies = await searchMovies(searchTerm);
+// interface MoviesProps {
+//   searchParams: string;
+// }
+
+const Movies = async () => {
+  const query = "inception"; // Значение по умолчанию, можно также использовать другой механизм для получения из параметров
+  let initialMovies: MovieInfo[] = [];
+  try {
+    initialMovies = await fetchMovies(query);
+  } catch (error) {
+    console.error("Failed to fetch movies:", error);
+  }
+  // const movies = searchMovies(searchParams);
 
   // if (isLoading) {
   //   return <MoviesContainer>Loading...</MoviesContainer>;
@@ -22,5 +33,7 @@ export default async function Movies({ searchTerm }: MoviesProps) {
   //     </MoviesContainer>
   //   );
   // }
-  return <MovieList movies={movies} />;
-}
+  return <MovieList initialMovies={initialMovies} initialQuery={query} />;
+};
+
+export default Movies;

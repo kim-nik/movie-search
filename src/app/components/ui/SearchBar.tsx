@@ -1,24 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useDebounce } from "react-use";
 
-interface SearchBarProps {
-  onSearch: (x: string) => void;
-}
+const SearchBar: React.FC = () => {
+  const router = useRouter();
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useDebounce(
     () => {
-      onSearch(searchTerm);
-
-      // router.push(`/?query=${encodeURIComponent(searchTerm)}`);
+      if (searchTerm) {
+        router.push(`/?query=${encodeURIComponent(searchTerm)}`);
+      } else {
+        router.push(`/`);
+      }
     },
     300,
     [searchTerm]
   );
+
+  useEffect(() => {
+    // Устанавливаем начальное значение поисковой строки из URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialQuery = urlParams.get("query");
+    if (initialQuery) {
+      setSearchTerm(initialQuery);
+    }
+  }, []);
 
   return (
     <input

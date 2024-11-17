@@ -1,3 +1,5 @@
+"use server"; // TODO в app router все компоненты по умолчанию серверные, однако здесь и далее я явно указал это, для удобства
+
 import ClientMovies from "./components/ClientMovies";
 
 const Home = async () => {

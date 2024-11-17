@@ -4,18 +4,42 @@ import { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
 import MovieInfo from "../types/MovieInfo";
 import MoviesContainer from "./MoviesContainer";
+import { fetchMovies } from "../services/movieApi";
+import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
 
 interface MovieListProps {
-  movies: MovieInfo[];
+  initialMovies: MovieInfo[];
+  initialQuery: string;
 }
 
-const MovieList: React.FC<MovieListProps> = ({ movies }) => {
+const MovieList: React.FC<MovieListProps> = ({
+  initialMovies,
+  initialQuery,
+}) => {
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query") || "inception"; // Значение по умолчанию "inception"
+
+  const {
+    data: movies = initialMovies,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["movies", query],
+    queryFn: () => fetchMovies(query),
+    staleTime: 1000 * 60 * 5,
+    initialData: query === initialQuery ? initialMovies : undefined, // initialData используется, если запрос совпадает с initialQuery
+  });
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;
 
   const totalPages = Math.ceil(movies.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentMovies = movies.slice(startIndex, startIndex + itemsPerPage);
+  const currentMovies: MovieInfo[] = movies.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   useEffect(() => {
     // probably can be optimized to call less renders
@@ -37,6 +61,28 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
       setCurrentPage((prevPage) => prevPage - 1);
     }
   };
+
+  if (isLoading) {
+    return (
+      <MoviesContainer>
+        <div className="w-full flex items-center justify-center">
+          <h2 className="text-black text-center">Loading...</h2>
+        </div>
+      </MoviesContainer>
+    );
+  }
+
+  if (isError) {
+    return (
+      <MoviesContainer>
+        <div className="w-full flex items-center justify-center">
+          <h2 className="text-black text-center">
+            Failed to load movies. Please try again later.
+          </h2>
+        </div>
+      </MoviesContainer>
+    );
+  }
 
   return (
     <MoviesContainer>
