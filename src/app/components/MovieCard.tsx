@@ -2,6 +2,9 @@
 
 import { useAddToFavorites } from "../services/favoriteMoviesQuery";
 import MovieInfo from "../types/MovieInfo";
+import { useHover } from "react-use";
+import { useRef } from "react";
+import Image from "next/image";
 
 interface MovieCardProps {
   movie: MovieInfo;
@@ -16,12 +19,23 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
 
   const defaultPoster = "/404.jpeg";
 
-  return (
-    <div className="bg-white shadow-md rounded-lg overflow-hidden w-full">
-      <img
+  // FIXME у меня большие сомнения в том, что это легальное применение hover
+  const cardRef = useRef<HTMLDivElement>(null);
+  const hoverable = useHover((hovered) => (
+    <div
+      // FIXME без вот этого ключа почему-то появляется ошибка
+      key={movie.imdbID}
+      ref={cardRef}
+      className={`bg-white shadow-md rounded-lg overflow-hidden w-full transform transition-transform duration-300 ${
+        hovered ? "scale-105 shadow-lg" : ""
+      }`}
+    >
+      <Image
         src={movie.Poster != "N/A" ? movie.Poster : defaultPoster}
         alt={`${movie.Title} poster`}
         className="w-full object-cover h-64 sm:h-80 lg:h-96"
+        width={240}
+        height={500}
       />
       <div className="p-4">
         <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 text-black h-[3.5rem] line-clamp-2">
@@ -41,6 +55,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
         </button>
       </div>
     </div>
-  );
+  ));
+
+  return hoverable;
 };
 export default MovieCard;
