@@ -2,7 +2,7 @@
 
 import SearchBar from "./ui/SearchBar";
 import Movies from "./Movies";
-import FavoritesMovieList from "./favorites/FavoritesMovieList";
+import FavoritesMovieList from "./FavoritesMovieList";
 // import { useSearchParam } from "react-use";
 // import { useEffect, useState } from "react";
 

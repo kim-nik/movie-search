@@ -1,10 +1,10 @@
 "use client";
 
-import MovieInfo from "../../types/MovieInfo";
+import MovieInfo from "../types/MovieInfo";
 import {
   useFavoriteMovies,
   useRemoveFromFavorites,
-} from "../../services/favoriteMoviesQuery";
+} from "../services/favoriteMoviesQuery";
 
 const FavoritesMovieList: React.FC = () => {
   const { data: favoriteMovies = [], isLoading } = useFavoriteMovies();
