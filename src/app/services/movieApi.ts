@@ -11,6 +11,7 @@ export async function fetchMovies(query: string, page: number = 1) {
     `${API_URL}s=${encodeURIComponent(query)}&page=${page}`
   );
   if (!response.ok) {
+    console.log(response);
     throw new Error("Failed to fetch movies");
   }
   const data = await response.json();
