@@ -9,7 +9,6 @@ const Movies = async () => {
   let initialMovies: MovieInfo[] = [];
   try {
     initialMovies = await fetchMovies(query);
-    console.log(initialMovies);
   } catch (error) {
     console.error("Failed to fetch movies:", error);
   }
