@@ -26,16 +26,13 @@ export async function fetchMoviesBySearch(query: string, page: number = 1) {
 export async function fetchMovieById(
   movieId: string
 ): Promise<DetailedMovieInfo> {
-  console.log(`${API_URL}i=${encodeURIComponent(movieId)}&plot=full`);
   const response = await fetch(
     `${API_URL}i=${encodeURIComponent(movieId)}&plot=full`
   );
   if (!response.ok) {
     throw new Error("Failed to fetch movie");
   }
-  console.log(response);
   const data = await response.json();
-  console.log(data);
   return {
     Title: data.Title,
     Year: data.Year,
