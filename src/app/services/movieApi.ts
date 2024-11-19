@@ -1,11 +1,11 @@
 "use server";
 
-import MovieInfo from "../types/MovieInfo";
+import { DetailedMovieInfo, MovieInfo, Rating } from "../types/MovieInfo";
 
 const apiKey = process.env.OMDB_API_KEY;
 const API_URL = `https://www.omdbapi.com/?apikey=${apiKey}&`;
 
-export async function fetchMovies(query: string, page: number = 1) {
+export async function fetchMoviesBySearch(query: string, page: number = 1) {
   if (query === "" || query === undefined) query = "Inception";
   const response = await fetch(
     `${API_URL}s=${encodeURIComponent(query)}&page=${page}`
@@ -21,4 +21,49 @@ export async function fetchMovies(query: string, page: number = 1) {
 
   // Если фильмов нет, возвращаем пустой массив
   return [];
+}
+
+export async function fetchMovieById(
+  movieId: string
+): Promise<DetailedMovieInfo> {
+  console.log(`${API_URL}i=${encodeURIComponent(movieId)}&plot=full`);
+  const response = await fetch(
+    `${API_URL}i=${encodeURIComponent(movieId)}&plot=full`
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch movie");
+  }
+  console.log(response);
+  const data = await response.json();
+  console.log(data);
+  return {
+    Title: data.Title,
+    Year: data.Year,
+    Rated: data.Rated,
+    Released: data.Released,
+    Runtime: data.Runtime,
+    Genre: data.Genre,
+    Director: data.Director,
+    Writer: data.Writer,
+    Actors: data.Actors,
+    Plot: data.Plot,
+    Language: data.Language,
+    Country: data.Country,
+    Awards: data.Awards,
+    Poster: data.Poster,
+    Ratings: data.Ratings.map((rating: Rating) => ({
+      Source: rating.Source,
+      Value: rating.Value,
+    })),
+    Metascore: data.Metascore,
+    imdbRating: data.imdbRating,
+    imdbVotes: data.imdbVotes,
+    imdbID: data.imdbID,
+    Type: data.Type,
+    DVD: data.DVD,
+    BoxOffice: data.BoxOffice,
+    Production: data.Production,
+    Website: data.Website,
+    Response: data.Response,
+  } as DetailedMovieInfo;
 }

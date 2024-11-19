@@ -1,6 +1,6 @@
 "use client";
 
-import MovieInfo from "../../types/MovieInfo";
+import { MovieInfo } from "../../types/MovieInfo";
 import {
   useFavoriteMovies,
   useRemoveFromFavorites,

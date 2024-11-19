@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
-import MovieInfo from "../types/MovieInfo";
+import { MovieInfo } from "../types/MovieInfo";
 import MoviesContainer from "./MoviesContainer";
-import { fetchMovies } from "../services/movieApi";
+import { fetchMoviesBySearch } from "../services/movieApi";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 
@@ -26,7 +26,7 @@ const MovieList: React.FC<MovieListProps> = ({
     isError,
   } = useQuery({
     queryKey: ["movies", query],
-    queryFn: () => fetchMovies(query),
+    queryFn: () => fetchMoviesBySearch(query),
     staleTime: 1000 * 60 * 5,
     initialData: query === initialQuery ? initialMovies : undefined, // initialData используется, если запрос совпадает с initialQuery
   });

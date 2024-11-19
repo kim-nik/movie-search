@@ -4,7 +4,7 @@ import {
   addMovieToFavorites,
   removeMovieFromFavorites,
 } from "../services/favoriteMovies";
-import MovieInfo from "../types/MovieInfo";
+import { MovieInfo } from "../types/MovieInfo";
 
 export const useFavoriteMovies = () => {
   return useQuery({

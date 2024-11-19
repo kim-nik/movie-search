@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import MovieInfo from "../types/MovieInfo";
+import { MovieInfo } from "../types/MovieInfo";
 
 export const fetchFavoriteMovies = async (): Promise<MovieInfo[]> => {
   const response = await new Promise<MovieInfo[]>((resolve) => {

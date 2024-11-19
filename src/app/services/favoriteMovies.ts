@@ -1,4 +1,4 @@
-import MovieInfo from "../types/MovieInfo";
+import { MovieInfo } from "../types/MovieInfo";
 
 export const fetchFavoriteMovies = async (): Promise<MovieInfo[]> => {
   const favorites = JSON.parse(localStorage.getItem("favoriteMovies") || "[]");

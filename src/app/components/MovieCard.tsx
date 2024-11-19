@@ -1,17 +1,16 @@
 "use client";
 
 import { useAddToFavorites } from "../services/favoriteMoviesQuery";
-import MovieInfo from "../types/MovieInfo";
+import { MovieInfo } from "../types/MovieInfo";
 import { useHover } from "react-use";
-import { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface MovieCardProps {
   movie: MovieInfo;
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
-  // сюда или выше?
   const addToFavoritesMutation = useAddToFavorites();
   const addToFavoritesHandler = () => {
     addToFavoritesMutation.mutate(movie);
@@ -20,12 +19,11 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const defaultPoster = "/404.jpeg";
 
   // FIXME у меня большие сомнения в том, что это легальное применение hover
-  const cardRef = useRef<HTMLDivElement>(null);
   const hoverable = useHover((hovered) => (
-    <div
+    <Link
+      href={`/movie/${movie.imdbID}`}
       // FIXME без вот этого ключа почему-то появляется ошибка
       key={movie.imdbID}
-      ref={cardRef}
       className={`bg-white shadow-md rounded-lg overflow-hidden w-full transform transition-transform duration-300 ${
         hovered ? "scale-105 shadow-lg" : ""
       }`}
@@ -54,7 +52,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
           Add to Favorites
         </button>
       </div>
-    </div>
+    </Link>
   ));
 
   return hoverable;
