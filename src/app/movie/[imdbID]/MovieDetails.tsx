@@ -1,4 +1,5 @@
 import { DetailedMovieInfo } from "@/app/types/MovieInfo";
+import Image from "next/image";
 
 interface MovieDetailsProps {
   movie: DetailedMovieInfo;
@@ -9,10 +10,12 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie }) => {
     <div className="movie-details max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md">
       <h1 className="text-3xl font-bold mb-4 text-gray-800">{movie.Title}</h1>
       <div className="flex flex-col md:flex-row gap-6">
-        <img
+        <Image
           src={movie.Poster}
           alt={`${movie.Title} poster`}
-          className="w-full md:w-1/3 rounded-lg shadow-md"
+          className="w-full object-cover md:w-1/3 rounded-lg shadow-md"
+          height={700}
+          width={500}
         />
         <div className="flex-1">
           <p className="mb-4 text-gray-600">{movie.Plot}</p>

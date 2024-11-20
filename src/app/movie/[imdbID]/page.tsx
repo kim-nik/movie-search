@@ -18,13 +18,13 @@ interface MoviePageProps {
 // }
 
 const MoviePage = async ({ params }: MoviePageProps) => {
-  const movieId = (await params).imdbID;
+  const { imdbID } = await params; // Ожидаем, что params является асинхронным и нужно "развернуть" его
 
   let movie: DetailedMovieInfo | null = null;
 
   try {
     // Получаем данные о фильме по его ID
-    movie = await fetchMovieById(movieId);
+    movie = await fetchMovieById(imdbID);
   } catch (error) {
     console.error("Failed to fetch movie:", error);
   }
