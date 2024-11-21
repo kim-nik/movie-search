@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const NotFoundPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen w-full bg-white shadow-md rounded-md">
       <h1 className="text-4xl font-bold text-gray-800 mb-4">
         404 - Page Not Found
       </h1>

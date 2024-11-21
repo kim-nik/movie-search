@@ -1,15 +1,8 @@
-"use server"; // TODO в app router все компоненты по умолчанию серверные, однако здесь и далее я явно указал это, для удобства
-
 import ClientMovies from "./components/ClientMovies";
 
+// FIXME а нужен ли нам тогда ClientMovies или вынести всё обратно сюда?
 const Home = async () => {
-  return (
-    <div className="grid justify-items-center min-h-screen p-4 sm:p-8 pb-20 font-[family-name:var(--font-geist-sans)] h-130">
-      <main className="flex flex-col gap-4 sm:gap-8 items-center sm:items-start w-full xl:w-3/4">
-        <ClientMovies />
-      </main>
-    </div>
-  );
+  return <ClientMovies />;
 };
 
 export default Home;

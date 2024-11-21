@@ -13,7 +13,7 @@ export const addMovieToFavorites = async (movie: MovieInfo): Promise<void> => {
 
     // Проверяем, если фильм уже есть в избранном
     const isAlreadyFavorite = favoriteMovies.some(
-      (favMovie: MovieInfo) => favMovie.Title === movie.Title
+      (favMovie: MovieInfo) => favMovie.imdbID === movie.imdbID
     );
 
     if (!isAlreadyFavorite) {

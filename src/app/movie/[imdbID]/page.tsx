@@ -3,10 +3,6 @@ import MovieDetails from "./MovieDetails";
 import { fetchMovieById } from "@/app/services/movieApi";
 import { DetailedMovieInfo } from "@/app/types/MovieInfo";
 
-interface MoviePageProps {
-  params: { imdbID: string };
-}
-
 // export async function generateMetadata({
 //   params,
 // }: MoviePageProps): Promise<Metadata> {
@@ -17,8 +13,12 @@ interface MoviePageProps {
 //   };
 // }
 
-const MoviePage = async ({ params }: MoviePageProps) => {
-  const { imdbID } = await params; // Ожидаем, что params является асинхронным и нужно "развернуть" его
+const MoviePage = async ({
+  params,
+}: {
+  params: Promise<{ imdbID: string }>;
+}) => {
+  const { imdbID } = await params;
 
   let movie: DetailedMovieInfo | null = null;
 
@@ -37,11 +37,7 @@ const MoviePage = async ({ params }: MoviePageProps) => {
     );
   }
 
-  return (
-    <div>
-      <MovieDetails movie={movie} />
-    </div>
-  );
+  return <MovieDetails movie={movie} />;
 };
 
 export default MoviePage;

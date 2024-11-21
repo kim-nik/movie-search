@@ -1,8 +1,6 @@
-"use server";
-
 import SearchBar from "./ui/SearchBar";
 import Movies from "./Movies";
-import FavoritesMovieList from "./favorites/FavoritesMovieList";
+import FavoritesMovieList from "./favorites/FavoriteMoviesList";
 
 const ClientMovies: React.FC = () => {
   return (
