@@ -6,10 +6,7 @@ import { useState } from "react";
 
 interface MovieCardProps {
   movie: MovieInfo;
-  onAddToFav: () => void;
 }
-
-// FIXME я тут убрал реакт юз из-за глюков и общей странности имплементации
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const [hovered, setHovered] = useState(false);

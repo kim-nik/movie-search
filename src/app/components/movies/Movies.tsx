@@ -11,7 +11,7 @@ const Movies = async () => {
     console.error("Failed to fetch movies:", error);
   }
 
-  return <MovieList initialMovies={initialMovies} initialQuery={query} />;
+  return <MovieList initialMovies={initialMovies} />;
 };
 
 export default Movies;
