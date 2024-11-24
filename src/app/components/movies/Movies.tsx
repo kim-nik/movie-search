@@ -8,8 +8,7 @@ const Movies = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   let initialMovies: MovieInfo[] = [];
-  const search = await searchParams;
-  console.log(searchParams);
+  const search = searchParams;
 
   const query = typeof search.query === "string" ? search.query : "Inception";
   const year = typeof search.year === "string" ? search.year : "";
