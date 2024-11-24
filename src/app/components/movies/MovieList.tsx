@@ -2,21 +2,16 @@
 
 import { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
-import MovieInfo from "../types/MovieInfo";
+import { MovieInfo } from "../../types/MovieInfo";
 import MoviesContainer from "./MoviesContainer";
-import { fetchMovies } from "../services/movieApi";
-import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
+import { useSearchMovies } from "@/app/services/movieQueries";
 
 interface MovieListProps {
   initialMovies: MovieInfo[];
-  initialQuery: string;
 }
 
-const MovieList: React.FC<MovieListProps> = ({
-  initialMovies,
-  initialQuery,
-}) => {
+const MovieList: React.FC<MovieListProps> = ({ initialMovies }) => {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "inception"; // Значение по умолчанию "inception"
 
@@ -24,12 +19,7 @@ const MovieList: React.FC<MovieListProps> = ({
     data: movies = initialMovies,
     isLoading,
     isError,
-  } = useQuery({
-    queryKey: ["movies", query],
-    queryFn: () => fetchMovies(query),
-    staleTime: 1000 * 60 * 5,
-    initialData: query === initialQuery ? initialMovies : undefined, // initialData используется, если запрос совпадает с initialQuery
-  });
+  } = useSearchMovies(query);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;

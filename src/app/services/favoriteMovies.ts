@@ -1,36 +1,34 @@
-import MovieInfo from "../types/MovieInfo";
-
-export const fetchFavoriteMovies = async (): Promise<MovieInfo[]> => {
-  const favorites = JSON.parse(localStorage.getItem("favoriteMovies") || "[]");
+export const fetchFavoriteMovieIds = async (): Promise<string[]> => {
+  const favorites: string[] = JSON.parse(
+    localStorage.getItem("favoriteMoviesIds") || "[]"
+  );
   return favorites;
 };
 
-export const addMovieToFavorites = async (movie: MovieInfo): Promise<void> => {
+export const addMovieIdToFavorites = async (movieId: string): Promise<void> => {
   return new Promise<void>((resolve) => {
-    const favoriteMovies = JSON.parse(
-      localStorage.getItem("favoriteMovies") || "[]"
+    const favoriteMovieIds = JSON.parse(
+      localStorage.getItem("favoriteMoviesIds") || "[]"
     );
 
-    // Проверяем, если фильм уже есть в избранном
-    const isAlreadyFavorite = favoriteMovies.some(
-      (favMovie: MovieInfo) => favMovie.Title === movie.Title
-    );
-
-    if (!isAlreadyFavorite) {
-      const updatedFavorites = [...favoriteMovies, movie];
-      localStorage.setItem("favoriteMovies", JSON.stringify(updatedFavorites));
+    if (!favoriteMovieIds.includes(movieId)) {
+      const updatedFavorites = [...favoriteMovieIds, movieId];
+      localStorage.setItem(
+        "favoriteMoviesIds",
+        JSON.stringify(updatedFavorites)
+      );
     }
 
     resolve();
   });
 };
 
-export const removeMovieFromFavorites = (movie: MovieInfo): void => {
-  const favoriteMovies = JSON.parse(
-    localStorage.getItem("favoriteMovies") || "[]"
+export const removeMovieIdFromFavorites = (movieId: string): void => {
+  const favoriteMovieIds = JSON.parse(
+    localStorage.getItem("favoriteMoviesIds") || "[]"
   );
-  const updatedFavorites = favoriteMovies.filter(
-    (favMovie: MovieInfo) => favMovie.Title !== movie.Title
+  const updatedFavorites = favoriteMovieIds.filter(
+    (id: string) => id !== movieId
   );
-  localStorage.setItem("favoriteMovies", JSON.stringify(updatedFavorites));
+  localStorage.setItem("favoriteMoviesIds", JSON.stringify(updatedFavorites));
 };
