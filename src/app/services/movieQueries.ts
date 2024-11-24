@@ -1,15 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 
-export const useSearchMovies = (searchTerm: string) => {
+export const useSearchMovies = (searchTerm: string, year: string) => {
   const query = searchTerm.trim() === "" ? "Inception" : searchTerm;
 
   return useQuery({
-    queryKey: ["movies", query],
+    queryKey: ["movies", query, year],
 
     queryFn: async () => {
-      const response = await fetch(
-        `/api/movies?query=${encodeURIComponent(query)}`
-      );
+      const params = new URLSearchParams();
+      params.set("query", query);
+      if (year) {
+        params.set("year", year);
+      }
+      const response = await fetch(`/api/movies?${params.toString()}`);
       if (!response.ok) {
         throw new Error("Failed to fetch movies");
       }

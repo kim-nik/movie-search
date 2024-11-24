@@ -6,6 +6,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const movieId = searchParams.get("id");
   const query = searchParams.get("query");
+  const year = searchParams.get("year");
 
   if (movieId) {
     try {
@@ -20,7 +21,7 @@ export async function GET(request: NextRequest) {
     }
   } else if (query) {
     try {
-      const movies = await fetchMoviesBySearch(query);
+      const movies = await fetchMoviesBySearch(query, year ? year : "");
       return NextResponse.json(movies);
     } catch (error) {
       console.error("Failed to search movies:", error);

@@ -3,11 +3,17 @@ import { DetailedMovieInfo, MovieInfo, Rating } from "../types/MovieInfo";
 const apiKey = process.env.OMDB_API_KEY;
 const API_URL = `https://www.omdbapi.com/?apikey=${apiKey}&`;
 
-export async function fetchMoviesBySearch(query: string, page: number = 1) {
+export async function fetchMoviesBySearch(
+  query: string,
+  year?: string,
+  page: number = 1
+) {
   if (query === "" || query === undefined) query = "Inception";
-  const response = await fetch(
-    `${API_URL}s=${encodeURIComponent(query)}&page=${page}`
-  );
+  let url = `${API_URL}s=${encodeURIComponent(query)}&page=${page}`;
+  if (year) {
+    url += `&y=${encodeURIComponent(year)}`;
+  }
+  const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Failed to fetch movies");
   }
