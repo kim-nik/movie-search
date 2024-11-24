@@ -14,12 +14,13 @@ interface MovieListProps {
 const MovieList: React.FC<MovieListProps> = ({ initialMovies }) => {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "inception"; // Значение по умолчанию "inception"
+  const year = searchParams.get("year") || "";
 
   const {
     data: movies = initialMovies,
-    isLoading,
-    isError,
-  } = useSearchMovies(query);
+    // isLoading,
+    // isError,
+  } = useSearchMovies(query, year);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;
@@ -32,7 +33,6 @@ const MovieList: React.FC<MovieListProps> = ({ initialMovies }) => {
   );
 
   useEffect(() => {
-    // probably can be optimized to call less renders
     setCurrentPage(1);
   }, [movies]);
 
@@ -52,27 +52,27 @@ const MovieList: React.FC<MovieListProps> = ({ initialMovies }) => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <MoviesContainer>
-        <div className="w-full flex items-center justify-center">
-          <h2 className="text-black text-center">Loading...</h2>
-        </div>
-      </MoviesContainer>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <MoviesContainer>
+  //       <div className="w-full flex items-center justify-center">
+  //         <h2 className="text-black text-center">Loading...</h2>
+  //       </div>
+  //     </MoviesContainer>
+  //   );
+  // }
 
-  if (isError) {
-    return (
-      <MoviesContainer>
-        <div className="w-full flex items-center justify-center">
-          <h2 className="text-black text-center">
-            Failed to load movies. Please try again later.
-          </h2>
-        </div>
-      </MoviesContainer>
-    );
-  }
+  // if (isError) {
+  //   return (
+  //     <MoviesContainer>
+  //       <div className="w-full flex items-center justify-center">
+  //         <h2 className="text-black text-center">
+  //           Failed to load movies. Please try again later.
+  //         </h2>
+  //       </div>
+  //     </MoviesContainer>
+  //   );
+  // }
 
   return (
     <MoviesContainer>
