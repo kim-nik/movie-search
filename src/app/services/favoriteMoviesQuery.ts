@@ -1,24 +1,25 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  fetchFavoriteMovies,
-  addMovieToFavorites,
-  removeMovieFromFavorites,
-} from "../services/favoriteMovies";
-import { MovieInfo } from "../types/MovieInfo";
 
-export const useFavoriteMovies = () => {
+import { MovieInfo } from "../types/MovieInfo";
+import {
+  addMovieIdToFavorites,
+  fetchFavoriteMovieIds,
+  removeMovieIdFromFavorites,
+} from "./favoriteMovies";
+
+export const useFavoriteMoviesIds = () => {
   return useQuery({
-    queryKey: ["favoriteMovies"],
-    queryFn: fetchFavoriteMovies,
+    queryKey: ["favoriteMoviesIds"],
+    queryFn: fetchFavoriteMovieIds,
   });
 };
 
-export const useAddToFavorites = () => {
+export const useAddIdToFavorites = () => {
   const queryClient = useQueryClient();
 
   return useMutation<void, Error, MovieInfo>({
     mutationFn: async (movie: MovieInfo) => {
-      return addMovieToFavorites(movie);
+      return addMovieIdToFavorites(movie.imdbID as string);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["favoriteMovies"] });
@@ -26,11 +27,11 @@ export const useAddToFavorites = () => {
   });
 };
 
-export const useRemoveFromFavorites = () => {
+export const useRemoveIdFromFavorites = () => {
   const queryClient = useQueryClient();
   return useMutation<void, Error, MovieInfo>({
     mutationFn: async (movie: MovieInfo) => {
-      return removeMovieFromFavorites(movie);
+      return removeMovieIdFromFavorites(movie.imdbID as string);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["favoriteMovies"] });

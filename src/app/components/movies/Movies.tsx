@@ -1,7 +1,5 @@
-"use server";
-
-import { fetchMoviesBySearch } from "../services/movieApi";
-import { MovieInfo } from "../types/MovieInfo";
+import { fetchMoviesBySearch } from "../../services/movieApi";
+import { MovieInfo } from "../../types/MovieInfo";
 import MovieList from "./MovieList";
 
 const Movies = async () => {

@@ -1,6 +1,6 @@
-import SearchBar from "./ui/SearchBar";
+import FavoriteMoviesList from "../favorites/FavoriteMoviesList";
+import SearchBar from "../ui/SearchBar";
 import Movies from "./Movies";
-import FavoritesMovieList from "./favorites/FavoriteMoviesList";
 
 const ClientMovies: React.FC = () => {
   return (
@@ -8,7 +8,7 @@ const ClientMovies: React.FC = () => {
       <SearchBar />
       <div className="flex flex-col sm:flex-row gap-4 w-full">
         <Movies />
-        <FavoritesMovieList />
+        <FavoriteMoviesList />
       </div>
     </div>
   );

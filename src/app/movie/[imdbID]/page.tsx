@@ -3,7 +3,7 @@ import MovieDetails from "./MovieDetails";
 import { fetchMovieById } from "@/app/services/movieApi";
 import { DetailedMovieInfo } from "@/app/types/MovieInfo";
 
-// export async function generateMetadata({
+// export async function generateMetadata({  // TODO как тут параметров дождаться то
 //   params,
 // }: MoviePageProps): Promise<Metadata> {
 //   const movie = await fetchMovieById(params.imdbID);
