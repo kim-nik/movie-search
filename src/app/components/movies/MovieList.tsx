@@ -5,7 +5,7 @@ import MovieCard from "./MovieCard";
 import { MovieInfo } from "../../types/MovieInfo";
 import MoviesContainer from "./MoviesContainer";
 import { useSearchParams } from "next/navigation";
-import { useSearchMovies } from "@/app/services/movieQueries";
+import { useGetMoviesBySearch } from "@/app/services/movieQueries";
 
 interface MovieListProps {
   initialMovies: MovieInfo[];
@@ -20,7 +20,7 @@ const MovieList: React.FC<MovieListProps> = ({ initialMovies }) => {
     data: movies = initialMovies,
     // isLoading,
     // isError,
-  } = useSearchMovies(query, year);
+  } = useGetMoviesBySearch(query, year);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;

@@ -1,5 +1,4 @@
-import { fetchMoviesBySearch } from "../../services/movieApi";
-import { MovieInfo } from "../../types/MovieInfo";
+import { getMoviesBySearch } from "@/app/services/movieQueries";
 import MovieList from "./MovieList";
 
 const Movies = async ({
@@ -7,18 +6,11 @@ const Movies = async ({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  let initialMovies: MovieInfo[] = [];
-  const search = searchParams;
+  const query =
+    typeof searchParams.query === "string" ? searchParams.query : "Inception";
+  const year = typeof searchParams.year === "string" ? searchParams.year : "";
 
-  const query = typeof search.query === "string" ? search.query : "Inception";
-  const year = typeof search.year === "string" ? search.year : "";
-
-  try {
-    initialMovies = await fetchMoviesBySearch(query, year);
-  } catch (error) {
-    console.error("Failed to fetch movies:", error);
-  }
-
+  const initialMovies = await getMoviesBySearch(query, year);
   return <MovieList initialMovies={initialMovies} />;
 };
 

@@ -32,7 +32,6 @@ export default function RootLayout({
       >
         <Providers>
           <Header />
-          {/* FIXME как тут лучше обёртки со стилями раскидать */}
           <main className="grid justify-items-center min-h-screen p-4 sm:p-8 pb-20 ">
             <div className="flex flex-col gap-4 sm:gap-8 items-center sm:items-start w-full min-h-screen xl:w-3/4">
               {children}

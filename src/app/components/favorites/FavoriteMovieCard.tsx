@@ -1,4 +1,4 @@
-import { useRemoveIdFromFavorites } from "@/app/services/favoriteMoviesQuery";
+import { useRemoveFromFavorites } from "@/app/services/favoriteMoviesQuery";
 import { MovieInfo } from "@/app/types/MovieInfo";
 
 interface FavriteMoviesCardProps {
@@ -6,9 +6,9 @@ interface FavriteMoviesCardProps {
 }
 
 const FavriteMoviesCard: React.FC<FavriteMoviesCardProps> = ({ movie }) => {
-  const removeFromFavoritesMutation = useRemoveIdFromFavorites();
+  const removeFromFavoritesMutation = useRemoveFromFavorites();
   const handleRemoveFromFavorites = (movie: MovieInfo) => {
-    removeFromFavoritesMutation.mutate(movie);
+    removeFromFavoritesMutation.mutate(movie.imdbID as string);
   };
   return (
     <div>

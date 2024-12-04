@@ -1,7 +1,7 @@
+import { useAddToFavorites } from "@/app/services/favoriteMoviesQuery";
 import { MovieInfo } from "../../types/MovieInfo";
 import Image from "next/image";
 import Link from "next/link";
-import { useAddIdToFavorites } from "@/app/services/favoriteMoviesQuery";
 import { useState } from "react";
 
 interface MovieCardProps {
@@ -10,10 +10,10 @@ interface MovieCardProps {
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const [hovered, setHovered] = useState(false);
-  const addToFavoritesMutation = useAddIdToFavorites();
+  const addToFavoritesMutation = useAddToFavorites();
 
   const addToFavoritesHandler = () => {
-    addToFavoritesMutation.mutate(movie);
+    addToFavoritesMutation.mutate(movie.imdbID as string);
   };
 
   const defaultPoster = "/404.jpeg";
@@ -46,7 +46,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
             Release Date: {movie.Year}
           </p>
           <p className="text-gray-600 mb-4 text-sm sm:text-base lg:text-lg">
-            Rating: {movie.rating} / 10
+            Rating: 0 / 10
           </p>
         </div>
       </Link>

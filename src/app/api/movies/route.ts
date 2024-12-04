@@ -4,18 +4,19 @@ import type { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const movieId = searchParams.get("id");
+  const movieIds = searchParams.getAll("id");
   const query = searchParams.get("query");
   const year = searchParams.get("year");
 
-  if (movieId) {
+  if (movieIds.length > 0) {
     try {
-      const movie = await fetchMovieById(movieId);
-      return NextResponse.json(movie);
+      const moviePromises = movieIds.map((id) => fetchMovieById(id));
+      const movies = await Promise.all(moviePromises);
+      return NextResponse.json(movies);
     } catch (error) {
-      console.error("Failed to fetch movie:", error);
+      console.error("Failed to fetch movies by ids:", error);
       return NextResponse.json(
-        { error: "Failed to fetch movie" },
+        { error: "Failed to fetch movies by ids" },
         { status: 500 }
       );
     }

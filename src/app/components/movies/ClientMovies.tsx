@@ -12,7 +12,7 @@ const ClientMovies = ({
       <SearchBar />
       <div className="flex flex-col sm:flex-row gap-4 w-full">
         <Movies searchParams={searchParams} />
-        <FavoriteMoviesList />
+        <FavoriteMoviesList userId="user123" />
       </div>
     </div>
   );

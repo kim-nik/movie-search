@@ -1,12 +1,3 @@
-export interface MovieInfo {
-  imdbID: string | number;
-  Title: string;
-  Year: string;
-  rating?: number;
-  Poster: string;
-  Type: "movie" | "series";
-}
-
 export interface DetailedMovieInfo {
   Title: string;
   Year: string;
@@ -34,6 +25,18 @@ export interface DetailedMovieInfo {
   Website: string;
   Response: string;
 }
+export type MovieInfo = Pick<
+  DetailedMovieInfo,
+  "imdbID" | "Title" | "Poster" | "Type" | "Year" | "Ratings"
+>;
+// export interface MovieInfo {
+//   imdbID: string | number;
+//   Title: string;
+//   Year: string;
+//   Ratings: Rating[];
+//   Poster: string;
+//   Type: "movie" | "series";
+// }
 
 export interface Rating {
   Source: string;
